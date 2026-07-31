@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DROS-dharma | 緣起 ｜ 確定性本體論 AI 佛法義理推理引擎</title>
+    <meta name="description" content="dharma.dr-os.io 緣起。探索當 AI 遇上佛學，DROS 如何以天台判教為靈感，結合本體論路由與金剛合約，在二進位世界中捍衛清淨法義，解決 AI 佛法幻覺。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600&family=Noto+Serif+TC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #030508;
+            --card-bg: rgba(12, 15, 23, 0.85);
+            --gold-accent: #d97706;
+            --gold-glow: rgba(217, 119, 6, 0.2);
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: rgba(217, 119, 6, 0.12);
+            --font-main: 'Inter', sans-serif;
+            --font-serif: 'Noto Serif TC', serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-serif);
+            line-height: 1.85;
+            background-image: 
+                radial-gradient(circle at 50% 10%, rgba(217, 119, 6, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 10% 80%, rgba(217, 119, 6, 0.02) 0%, transparent 40%);
+            letter-spacing: 0.03em;
+        }
+
+        /* Header Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(16px);
+            background: rgba(3, 5, 8, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: var(--font-code);
+            font-weight: 800;
+            font-size: 1.15rem;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 0.4rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: var(--font-code);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            color: var(--gold-accent);
+            background: rgba(217, 119, 6, 0.08);
+        }
+
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch:hover {
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 7rem 1.2rem 4rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 1rem;
+            border-radius: 9999px;
+            background: rgba(217, 119, 6, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--gold-accent);
+            font-size: 0.85rem;
+            font-family: var(--font-code);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.25;
+            margin-bottom: 1.2rem;
+            color: #fff;
+            text-shadow: 0 0 40px rgba(217, 119, 6, 0.15);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: #d1d5db;
+            max-width: 750px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Metaphor Banner */
+        .quote-banner {
+            background: linear-gradient(135deg, rgba(217, 119, 6, 0.08) 0%, rgba(3, 5, 8, 0.9) 100%);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 2.5rem;
+            margin: 3.5rem 0;
+            text-align: center;
+        }
+
+        .quote-banner p {
+            font-size: 1.4rem;
+            line-height: 1.7;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .quote-banner cite {
+            font-style: normal;
+            font-family: var(--font-code);
+            color: var(--gold-accent);
+            font-size: 0.85rem;
+        }
+
+        /* Story Block */
+        .story-section {
+            margin-bottom: 3.5rem;
+        }
+
+        .story-section h2 {
+            font-size: 1.8rem;
+            color: var(--gold-accent);
+            margin-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .story-section p {
+            font-size: 1.05rem;
+            color: #e5e7eb;
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        .story-section strong {
+            color: #fff;
+        }
+
+        /* Metaphor Box */
+        .metaphor-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.8rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .glass-card h3 {
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .glass-card p {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            color: var(--text-muted);
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* RWD */
+        @media (max-width: 768px) {
+            header { padding: 0.6rem 0.8rem; }
+            .logo { font-size: 0.95rem; }
+            .nav-list { gap: 0.2rem; }
+            .nav-link { font-size: 0.75rem; padding: 0.25rem 0.35rem; }
+            .hero h1 { font-size: 2rem; }
+            .metaphor-box { grid-template-columns: 1fr; }
+            .quote-banner p { font-size: 1.15rem; }
+            .doc-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <a href="origin_page.html" class="logo">
+            ☸️ DROS-dharma
+        </a>
+        <nav>
+            <ul class="nav-list">
+                <li><a href="origin_page.html" class="nav-link active">緣起</a></li>
+                <li><a href="architecture.html" class="nav-link">技術架構</a></li>
+                <li><a href="dharma_app_demo.html" class="nav-link">AI書僮</a></li>
+                <li><a href="github.html" class="nav-link">下載與論文</a></li>
+                <li><a href="https://facebook.com/916033518256645" target="_blank" class="nav-link">FB</a></li>
+            </ul>
+            <button class="lang-switch" onclick="toggleLanguage()">EN/中</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-badge">
+                <span id="hero-badge-txt">☸️ 依法不依人 ｜ 零幻覺本體路由</span>
+            </div>
+            <h1 id="hero-title">當 AI 遇上佛學：在代碼中捍衛清淨法義</h1>
+            <p id="hero-desc">
+                大型語言模型 (LLM) 的機率性輸出，正對佛學義理構成前所未有的「法難與語義污染」。<br>
+                DROS-dharma 承載二千年判教智慧，以確定性本體路由與物理熔斷，在二進位世界守護最後的法義防線。
+            </p>
+        </section>
+
+        <!-- Doctrinal Metaphor Quote Banner -->
+        <div class="quote-banner">
+            <p id="quote-p">「自依止，法依止，莫異依止。」</p>
+            <cite id="quote-cite">—— 釋迦牟尼佛《大般涅槃經》</cite>
+        </div>
+
+        <!-- Section 1: The Crisis of AI Dharma -->
+        <section class="story-section">
+            <h2 id="sec1-title">一、 危機：AI 時代的「佛經幻覺與義理混淆」</h2>
+            <p id="sec1-p1">
+                當今的大語言模型非常擅長寫作、程式與對話。然而，當我們向 AI 詢問嚴謹的佛法時，致命的缺陷便會顯露無遺：它會隨機編造不存在的經典出處（<strong>文獻幻覺</strong>）、將中觀的「空性」與虛無主義強行等同、甚至將禪宗的「本覺見」與唯識學派的「阿賴耶識」混為一談，抹平了二千年來無數祖師大德嚴謹辨析的宗派見地邊界（<strong>語義漂移</strong>）。
+            </p>
+            <p id="sec1-p2">
+                傳統的 RAG (向量檢索) 技術只依賴機率性的「文字相似度」，缺乏對上下文法義脈絡與宗派見地的「邊界感知」。這種將法義拉平、注水的產出，在本質上是對清淨法流的嚴重污染。
+            </p>
+        </section>
+
+        <!-- Metaphor: Doctrinal Classification -->
+        <section class="story-section">
+            <h2 id="sec2-title">二、 啟示：天台宗智者大師的「判教」代碼化</h2>
+            <p id="sec2-p1">
+                西元六世紀，中國天台宗創始人智者大師智顗面對當時從印度傳入、看似互相矛盾的龐大佛典，提出了偉大的<strong>「五時八教」判教（Doctrinal Classification）</strong>知識架構。他沒有否定任何一部經，而是根據佛陀說法的時機、受眾的根基，將經典分門別類，劃定各自的義理適用邊界。
+            </p>
+            <p id="sec2-p2">
+                DROS (Dharma Reasoning Operating System) 的核心設計靈感即來源於此。我們將「判教」機制轉化為機器可驗證的硬性約束契約，讓 AI 在推理時，必須強制遵循特定的<strong>「命名空間隔離 (Namespace Segregation)」</strong>與<strong>「認知權威 (Epistemic Authority) 政策」</strong>。
+            </p>
+
+            <div class="metaphor-box">
+                <div class="glass-card">
+                    <h3 id="card1-title">🛡️ 金剛熔斷 (Vajra Mode)</h3>
+                    <p id="card1-desc">將判教約束寫入二進位執行層。當 AI 的回答缺乏經典實體定錨、或越過宗派界限時，系統直接在 CPU 端物理熔斷（線程 panic），拒絕機率性忽悠，確保學術與求真的極端嚴謹性。</p>
+                </div>
+                <div class="glass-card">
+                    <h3 id="card2-title">🪷 菩薩詮釋 (Bodhisattva Mode)</h3>
+                    <p id="card2-desc">在金剛合約劃定的安全邊界內，允許 AI 結合現代語境與科學比喻進行溫潤的解說，做到「依法不依人，隨流而不失宗風」。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Ontological Sandbox -->
+        <section class="story-section">
+            <h2 id="sec3-title">三、 本體論沙盒：數位佛堂的守護陣地</h2>
+            <p id="sec3-p1">
+                透過我們開發的 <strong>Preemptive 圖譜過濾器</strong> 與 <strong>20,947 個黃金名相節點</strong>，DROS-dharma 利用佛學的核心主題架構，將龐大的中文佛學典藏提煉為可被機器 100% 驗證的「證據鏈」。
+            </p>
+            <p id="sec3-p2">
+                我們深知「文字不可靠，只有確定性的行為具備真實因果」。DROS 承諾：無論是網頁版的小悟書僮，還是開源的 Obsidian 伴學套件，都絕不允許產生任何一絲佛經幻覺。這是我們在資訊時代，對佛法最清淨的法義供養。
+            </p>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 DROS-dharma. CC BY-NC-SA 4.0. Published under U.S. Patent Application No. 64/111,973.</p>
+        </footer>
+    </div>
+
+    <!-- Script for Language Toggle -->
+    <script>
+        let currentLang = 'zh';
+        const textData = {
+            zh: {
+                heroBadge: '☸️ 依法不依人 ｜ 零幻覺本體路由',
+                heroTitle: '當 AI 遇上佛學：在代碼中捍衛清淨法義',
+                heroDesc: '大型語言模型 (LLM) 的機率性輸出，正對佛學義理構成前所未有的「法難與語義污染」。<br>DROS-dharma 承載二千年判教智慧，以確定性本體路由與物理熔斷，在二進位世界守護最後的法義防線。',
+                quoteP: '「自依止，法依止，莫異依止。」',
+                quoteCite: '—— 釋迦牟尼佛《大般涅槃經》',
+                sec1Title: '一、 危機：AI 時代的「佛經幻覺與義理混淆」',
+                sec1P1: '當今的大語言模型非常擅長寫作、程式與對話。然而，當我們向 AI 詢問嚴謹的佛法時，致命的缺陷便會顯露無遺：它會隨機編造不存在的經典出處（<strong>文獻幻覺</strong>）、將中觀的「空性」與虛無主義強行等同、甚至將禪宗的「本覺見」與唯識學派的「阿賴耶識」混為一談，抹平了二千年來無數祖師大德嚴謹辨析的宗派見地邊界（<strong>語義漂移</strong>）。',
+                sec1P2: '傳統的 RAG (向量檢索) 技術只依賴機率性的「文字相似度」，缺乏對上下文法義脈絡與宗派見地的「邊界感知」。這種將法義拉平、注水的產出，在本質上是對清淨法流的嚴重污染。',
+                sec2Title: '二、 啟示：天台宗智者大師的「判教」代碼化',
+                sec2P1: '西元六世紀，中國天台宗創始人智者大師智意面對當時從印度傳入、看似互相矛盾的龐大佛典，提出了偉大的<strong>「五時八教」判教（Doctrinal Classification）</strong>知識架構。他沒有否定任何一部經，而是根據佛陀說法的時機、受眾的根基，將經典分門別類，劃定各自的義理適用邊界。',
+                sec2P2: 'DROS (Dharma Reasoning Operating System) 的核心設計靈感即來源於此。我們將「判教」機制轉化為機器可驗證的硬性約束契約，讓 AI 在推理時，必須強制遵循特定的<strong>「命名空間隔離 (Namespace Segregation)」</strong>與<strong>「認知權威 (Epistemic Authority) 政策」</strong>。',
+                card1Title: '🛡️ 金剛熔斷 (Vajra Mode)',
+                card1Desc: '將判教約束寫入二進位執行層。當 AI 的回答缺乏經典實體定錨、或越過宗派界限時，系統直接在 CPU 端物理熔斷（線程 panic），拒絕機率性忽悠，確保學術與求真的極端嚴謹性。',
+                card2Title: '🪷 菩薩詮釋 (Bodhisattva Mode)',
+                card2Desc: '在金剛合約劃定的安全邊界內，允許 AI 結合現代語境與科學比喻進行溫潤的解說，做到「依法不依人，隨流而不失宗風」。',
+                sec3Title: '三、 本體論沙盒：數位佛堂的守護陣地',
+                sec3P1: '透過我們開發的 <strong>Preemptive 圖譜過濾器</strong> 與 <strong>20,947 個黃金名相節點</strong>，DROS-dharma 利用佛學的核心主題架構，將龐大的中文佛學典藏提煉為可被機器 100% 驗證的「證據鏈」。',
+                sec3P2: '我們深知「文字不可靠，只有確定性的行為具備真實因果」。DROS 承諾：無論是網頁版的小悟書僮，還是開源的 Obsidian 伴學套件，都絕不允許產生任何一絲佛經幻覺。這是我們在資訊時代，對佛法最清淨的法義供養。'
+            },
+            en: {
+                heroBadge: '☸️ Dharma-Centered | Zero-Hallucination Routing',
+                heroTitle: 'AI Meets Buddhism: Defending Dharma in Binary Code',
+                heroDesc: 'Probabilistic LLM outputs present an unprecedented crisis of doctrinal contamination and semantic drift. Backed by Zhiyi\'s 6th-century Panjiao system, DROS-dharma enforces deterministic boundary control to protect the pure transmission of teachings.',
+                quoteP: '"Make the Dharma your island, make the Dharma your refuge."',
+                quoteCite: '—— Gautama Buddha, Mahaparinibbana Sutta',
+                sec1Title: 'I. The Crisis: Hallucinations in Buddhist AI',
+                sec1P1: 'Modern LLMs fake citations and confound strict philosophical boundaries (e.g. confounding Zen\'s "Original Enlightenment" with Yogacara\'s "Alaya-vijnana"). Conventional vector-similarity RAG fails due to semantic context blindness.',
+                sec1P2: 'Mixing distinct lineages without ontological awareness pollutes the pure Dharma. Precision domain routing is critical.',
+                sec2Title: 'II. Zhiyi\'s Legacy: Doctrinal Classification as Code',
+                sec2P1: 'In the 6th century, Master Zhiyi developed the Tiantai Panjiao system to organize apparent contradictions in Buddhist texts. DROS codifies this concept into OS-level namespace sandboxing.',
+                sec2P2: 'By translating Doctrinal Classification into machine-verifiable Vajra Contracts, DROS sandboxes AI reasoning boundaries.',
+                card1Title: '🛡️ Vajra Mode (Circuit Breaker)',
+                card1Desc: 'Enforces hard CPU-side thread panics if the AI response lacks authenticated scripture paragraph IDs or crosses tradition boundaries.',
+                card2Title: '🪷 Bodhisattva Mode (Interpretation)',
+                card2Desc: 'Allows gentle modern metaphors and scholastic perspectives strictly bounded within Vajra-validated evidence.',
+                sec3Title: 'III. The Ontological Sandbox: Preserving Pure Lineage',
+                sec3P1: 'Backed by 20,947 golden concept nodes, DROS-dharma leverages core Buddhist thematic architectures to distill massive Chinese Buddhist canon into machine-verifiable evidence chains.',
+                sec3P2: 'We believe that words are unreliable; only behavior has deterministic outcomes. Our commitment is zero hallucination.'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const data = textData[currentLang];
+            
+            document.getElementById('hero-badge-txt').innerText = data.heroBadge;
+            document.getElementById('hero-title').innerText = data.heroTitle;
+            document.getElementById('hero-desc').innerHTML = data.heroDesc;
+            document.getElementById('quote-p').innerText = data.quoteP;
+            document.getElementById('quote-cite').innerText = data.quoteCite;
+            
+            document.getElementById('sec1-title').innerText = data.sec1Title;
+            document.getElementById('sec1-p1').innerHTML = data.sec1P1;
+            document.getElementById('sec1-p2').innerHTML = data.sec1P2;
+            
+            document.getElementById('sec2-title').innerText = data.sec2Title;
+            document.getElementById('sec2-p1').innerHTML = data.sec2P1;
+            document.getElementById('sec2-p2').innerHTML = data.sec2P2;
+            
+            document.getElementById('card1-title').innerText = data.card1Title;
+            document.getElementById('card1-desc').innerText = data.card1Desc;
+            document.getElementById('card2-title').innerText = data.card2Title;
+            document.getElementById('card2-desc').innerText = data.card2Desc;
+            
+            document.getElementById('sec3-title').innerText = data.sec3Title;
+            document.getElementById('sec3-p1').innerHTML = data.sec3P1;
+            document.getElementById('sec3-p2').innerHTML = data.sec3P2;
+        }
+    </script>
+</body>
+</html>
