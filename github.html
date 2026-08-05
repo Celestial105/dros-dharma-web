@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DROS下載與學術論文 | Dharma Reasoning Operating System 本體論推理引擎</title>
+    <meta name="description" content="DROS (Dharma Reasoning Operating System) - 以確定性本體論路由 (DOR) 與判教 (Panjiao) 哲學為核心的無幻覺 AI 佛法義理推理引擎。內含 2 篇 Zenodo 國際論文、下載安裝與雙軌機制。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&family=Noto+Serif+TC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #06080d;
+            --card-bg: rgba(15, 20, 32, 0.75);
+            --gold-accent: #f59e0b;
+            --gold-glow: rgba(245, 158, 11, 0.25);
+            --cyan-accent: #06b6d4;
+            --red-alert: #ef4444;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --font-main: 'Inter', sans-serif;
+            --font-serif: 'Noto Serif TC', serif;
+            --font-code: 'Fira Code', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.75;
+            background-image: 
+                radial-gradient(circle at 10% 10%, rgba(245, 158, 11, 0.04) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 40%);
+        }
+
+        /* Header Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(16px);
+            background: rgba(6, 8, 13, 0.92);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+
+        .logo {
+            font-family: var(--font-code);
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            white-space: nowrap;
+        }
+
+        .logo span { color: var(--gold-accent); }
+
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .nav-list {
+            display: flex;
+            gap: 0.4rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-family: var(--font-code);
+            padding: 0.3rem 0.55rem;
+            border-radius: 6px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            color: var(--gold-accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .lang-switch {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            padding: 0.25rem 0.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: var(--font-code);
+            font-size: 0.75rem;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .lang-switch:hover {
+            border-color: var(--gold-accent);
+            color: var(--gold-accent);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 6rem 1.2rem 4rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.3rem 0.9rem;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: var(--gold-accent);
+            font-size: 0.85rem;
+            font-family: var(--font-code);
+            margin-bottom: 1.5rem;
+        }
+
+        .page-header h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .page-header p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 780px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Content Section */
+        .doc-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2.2rem;
+            margin-bottom: 2.2rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .doc-section h2 {
+            font-size: 1.65rem;
+            color: var(--gold-accent);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 0.75rem;
+        }
+
+        .doc-section h3 {
+            font-size: 1.2rem;
+            color: #fff;
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        .doc-section p, .doc-section li {
+            color: #d1d5db;
+            font-size: 0.95rem;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Paper Card Grid */
+        .paper-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .paper-card {
+            background: rgba(10, 15, 26, 0.85);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .paper-card h4 {
+            font-size: 1.1rem;
+            color: var(--cyan-accent);
+            margin-bottom: 0.75rem;
+            line-height: 1.4;
+        }
+
+        .paper-card p {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .paper-doi {
+            font-family: var(--font-code);
+            font-size: 0.78rem;
+            color: var(--gold-accent);
+            margin-bottom: 1rem;
+        }
+
+        .btn-paper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-family: var(--font-code);
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-paper:hover {
+            border-color: var(--cyan-accent);
+            color: var(--cyan-accent);
+        }
+
+        /* Code Block */
+        pre {
+            background: #090d16;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.2rem;
+            font-family: var(--font-code);
+            font-size: 0.88rem;
+            color: #38bdf8;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        code {
+            font-family: var(--font-code);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--gold-accent);
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        /* Grid Comparison */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .mode-card {
+            background: rgba(10, 15, 26, 0.8);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .mode-card.vajra { border-top: 3px solid var(--red-alert); }
+        .mode-card.bodhi { border-top: 3px solid var(--gold-accent); }
+
+        .mode-card h4 {
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .mode-card.vajra h4 { color: #f87171; }
+        .mode-card.bodhi h4 { color: var(--gold-accent); }
+
+        /* Action Buttons */
+        .cta-box {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            margin-top: 3rem;
+        }
+
+        .btn-github {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gold-accent);
+            color: #000;
+            font-family: var(--font-code);
+            font-weight: 700;
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-github:hover {
+            box-shadow: 0 0 20px var(--gold-glow);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-muted);
+            font-family: var(--font-code);
+            font-size: 0.85rem;
+        }
+
+        /* Hamburger Menu for Mobile */
+        .hamburger {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: #fff;
+            font-size: 1.2rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 0.6rem 1rem; }
+            .logo { font-size: 1rem; }
+            .hamburger { display: block; }
+            
+            .nav-list {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(6, 8, 13, 0.98);
+                border-bottom: 1px solid var(--border-color);
+                flex-direction: column;
+                padding: 1rem;
+                gap: 0.5rem;
+                backdrop-filter: blur(20px);
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+                z-index: 200;
+            }
+
+            .nav-list.open {
+                display: flex;
+            }
+
+            .nav-link {
+                font-size: 0.95rem;
+                padding: 0.6rem 1rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .paper-grid, .grid-2 { grid-template-columns: 1fr; }
+            .page-header h1 { font-size: 2rem; }
+            .doc-section { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Header -->
+    <header>
+        <a href="origin_page.html" class="logo" style="display: flex; align-items: center; gap: 8px;">
+            <img src="DROS-dharma-Logo.png" alt="DROS-dharma Logo" style="height: 32px; width: auto; object-fit: contain;"> DROS-dharma
+        </a>
+        <nav>
+            <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle Menu">☰</button>
+            <ul class="nav-list" id="nav-list">
+                <li><a href="origin_page.html" class="nav-link">緣起</a></li>
+                <li><a href="architecture.html" class="nav-link">技術架構</a></li>
+                <li><a href="dharma_app_demo.html" class="nav-link">AI書僮</a></li>
+                <li><a href="github.html" class="nav-link active">下載與論文</a></li>
+                <li><a href="https://facebook.com/916033518256645" target="_blank" class="nav-link">FB</a></li>
+            </ul>
+            <button class="lang-switch" onclick="toggleLanguage()">EN/中</button>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="badge">☸️ ONTOLOGICAL AI REASONING ENGINE</div>
+            <h1 id="dl-title">DROS (Dharma Reasoning Operating System)</h1>
+            <p id="dl-subtitle">
+                DROS 的原意為 <strong>「Dharma Reasoning Operating System (佛法邏輯推理作業系統)」</strong>。<br>
+                它是全球首創以<strong>「確定性本體論路由 (Deterministic Ontological Routing)」</strong>與天台宗<strong>「判教 (Panjiao) 知識架構」</strong>為核心的 AI 佛法義理推理引擎。<br><br>
+                🎁 <strong>免費打包，在家玩個夠！</strong> 我們將 20,947 個黃金名相節點與大覺藏原典全量開源。歡迎直接免費下載，在您本機電腦與 Obsidian 打造專屬於您的無幻覺伴學小書僮！
+            </p>
+        </div>
+
+        <!-- Section 1: Core Concept Explanation -->
+        <div class="doc-section">
+            <h2 id="sec1-title">🧠 開解：為什麼需要「本體論 AI 佛法義理推理引擎」？</h2>
+            <p id="sec1-p1">
+                傳統大語言模型 (LLM) 與基於向量相似度的 RAG 檢索，存在嚴重的「語境盲目性 (Context Blindness)」。在佛學大藏經與嚴謹哲學中，這會導致極為致命的<strong>「跨宗派知識污染與語義漂移」</strong>（例如：將禪宗的「本覺」、唯識的「阿賴耶識」與中觀的「緣起自性空」強行抹平混淆，甚至憑空編造經文卷數）。
+            </p>
+            <p id="sec1-p2">
+                DROS 借鑑古印度與中國天台宗智顗大師的「判教」智慧，將概念邊界從軟性的 Prompt 提示詞，升級為作業系統層級的物理 Access Control Lists (ACL)。配合 **20,947 個黃金名相本體節點**，實現 <strong>0 延遲語義隔離與 100% 無幻覺定錨</strong>。
+            </p>
+        </div>
+
+        <!-- Section 2: Zenodo Academic Papers -->
+        <div class="doc-section">
+            <h2 id="sec2-title">🔬 論文研究 (Zenodo Peer-Reviewed Papers)</h2>
+            <p id="sec2-p1">DROS 的本體論路由與金剛契約物理熔斷機制，已發表於國際 Zenodo 學術數據庫：</p>
+
+            <div class="paper-grid">
+                <!-- Paper 1 -->
+                <div class="paper-card">
+                    <div>
+                        <h4>📄 論文一：確定性本體路由框架 (DROS v8.0)</h4>
+                        <p style="font-size: 0.82rem; color: #9ca3af; margin-bottom: 0.5rem;">
+                            <em>Deterministic Ontological Routing Framework for Domain-Restricted LLM Systems: Design and Implementation of DROS v8.0</em>
+                        </p>
+                        <p>
+                            論證如何利用天台宗「判教」架構解決跨宗派語義漂移。先導測試中 7/7 道跨宗派高混淆難題達到 0 污染，Token 降低 72%，檢索延遲降至 12ms。
+                        </p>
+                    </div>
+                    <div>
+                        <div class="paper-doi">DOI: 10.5281/zenodo.20823268</div>
+                        <a href="https://zenodo.org/records/20823268" target="_blank" class="btn-paper">🔗 查看 Zenodo 論文 (20823268)</a>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div class="paper-card">
+                    <div>
+                        <h4>📄 論文二：約束即代碼與物理熔斷 (Constraint-as-Code)</h4>
+                        <p style="font-size: 0.82rem; color: #9ca3af; margin-bottom: 0.5rem;">
+                            <em>Constraint-as-Code: Deterministic LLM Governance via Buddhist Doctrinal Classification and Physical Circuit Breaking</em>
+                        </p>
+                        <p>
+                            論證如何將判教轉化為機器可驗證的「金剛契約 (Vajra Contract)」，並透過 C-FFI 建立 CPU 端物理熔斷點，並將此機制泛化為 DROS 商用安全 OS。
+                        </p>
+                    </div>
+                    <div>
+                        <div class="paper-doi">DOI: 10.5281/zenodo.20823227</div>
+                        <a href="https://zenodo.org/records/20823227" target="_blank" class="btn-paper">🔗 查看 Zenodo 論文 (20823227)</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 3: Dual Track -->
+        <div class="doc-section">
+            <h2 id="sec3-title">⚖️ 雙軌契約機制：金剛 vs 菩薩</h2>
+            <div class="grid-2">
+                <div class="mode-card vajra">
+                    <h4>🛡️ 金剛合約 (Vajra Mode) —— 【嚴格學術熔斷】</h4>
+                    <p>
+                        專為學者與嚴謹求真者設計。小悟只進行 100% 嚴格的原典學術推演。若本地資料庫中缺乏明確定錨的 T-Number 出處，系統秉持「無依據、不妄言」原則，<strong>直接在 C-ABI 邊界進行物理熔斷（推演終止）</strong>，絕不注水或產生 1 絲幻覺。
+                    </p>
+                </div>
+                <div class="mode-card bodhi">
+                    <h4>🪷 菩薩合約 (Bodhisattva Mode) —— 【溫潤隨流詮釋】</h4>
+                    <p>
+                        內嵌「雙軌對照安全網」。小悟會<strong>先啟動金剛模式</strong>劃定原典邊界，隨後立即接續<strong>菩薩詮釋</strong>，以溫潤、親切的語氣提供現代跨界比喻、歷史脈絡與學者見地，供讀者隨流參照。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 4: Quick Start Guide -->
+        <div class="doc-section">
+            <h2 id="sec4-title">🚀 四步驟快速下載、安裝與啟動</h2>
+            
+            <h3>Step 1. 準備基礎環境</h3>
+            <ul>
+                <li>前往 <a href="https://obsidian.md/" target="_blank" style="color:var(--cyan-accent);">Obsidian 官網</a> 下載安裝 Obsidian 筆記軟體。</li>
+                <li>確保 PC 安裝 <code>Python 3.10+</code>（請務必在安裝時勾選 <strong>Add Python to PATH</strong>）。</li>
+                <li>前往 <a href="https://aistudio.google.com/" target="_blank" style="color:var(--cyan-accent);">Google AI Studio</a> 申請免費用量 Gemini API Key。</li>
+            </ul>
+
+            <h3>Step 2. 下載 DROS 8.0 專案儲存庫</h3>
+            <p>打開終端機 (Terminal / PowerShell)，執行 Git 複製指令：</p>
+            <pre>git clone https://github.com/Top-Celestial-Company-Ltd/Dharma-Reasoning-Operating-System.git
+cd Dharma-Reasoning-Operating-System</pre>
+
+            <h3>Step 3. 載入 Obsidian 並啟用內建「DROS Doctrinal Copilot」外掛</h3>
+            <ol style="margin-left: 1.5rem;">
+                <li>打開 Obsidian，點選「開啟資料夾作為儲存庫 (Open folder as vault)」，指向下載解壓後的資料夾。</li>
+                <li><strong>啟用內建外掛 (免重新下載)</strong>：點選左下角設定 (⚙️) -> 關閉安全模式 (Turn off Safe Mode)。</li>
+                <li>找到內建外掛 <code>DROS Doctrinal Copilot</code> 並切換為<strong>打開 (啟用)</strong>。</li>
+                <li>點擊外掛旁邊的 ⚙️ 齒輪，在 <code>Gemini API Key</code> 填入您的 Google API Key 即可！</li>
+            </ol>
+
+            <h3>Step 4. (極客選項) 啟動本地 DROS 代理伺服器</h3>
+            <p>若您是想自己修改 Python 核心演算法 (如 <code>Weaver</code> 或 <code>GuardVM</code>) 的開發者：</p>
+            <pre># Windows 雙擊執行 gemini_proxy.vbs，或終端機執行：
+python src/proxy/gemini_proxy.py</pre>
+            <p>並將外掛 API Endpoint 指向 <code>http://127.0.0.1:8080/v1</code>。</p>
+        </div>
+
+        <!-- Section 5: v8.0 Core Inventions -->
+        <div class="doc-section">
+            <h2 id="sec5-title">⚡ DROS v8.0 黑科技：Preemptive 圖譜防崩潰過濾</h2>
+            <p>
+                當載入高達 20,947 個概念節點時，Obsidian 的 Graph View 預設會嘗試進行全量渲染，造成嚴重的 CPU 爆滿與卡死崩潰。
+            </p>
+            <p>
+                v8.0 預先在 <code>.obsidian/graph.json</code> 寫入了先發制人（Preemptive）過濾規則：
+            </p>
+            <pre>"search": "-\"##- **層級**: 3\" -\"20-佛光辭典全\""</pre>
+            <p>
+                <strong>效果</strong>：啟動時自動排除 Layer 3 實體/名物/地理等 1.5 萬個非義理節點與巨型辭典，<strong>只對 Layer 1 & 2 的核心義理進行輕量渲染</strong>，保證萬級數據庫載入如絲般順暢。
+            </p>
+        </div>
+
+        <!-- CTA Box -->
+        <div class="cta-box">
+            <h3 style="font-size: 1.6rem; margin-bottom: 1rem;">準備好體驗真正的無幻覺佛學推理了嗎？</h3>
+            <p style="margin-bottom: 1.5rem; color: var(--text-muted);">歡迎前往官方 GitHub 倉庫取得最新源碼與大覺藏發行套件。</p>
+            <a href="https://github.com/Top-Celestial-Company-Ltd/Dharma-Reasoning-Operating-System" target="_blank" class="btn-github">
+                ⭐ 前往 GitHub 倉庫頁面 (Dharma-Reasoning-Operating-System)
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 DROS Execution Governance. Open source under CC BY-NC-SA 4.0. Protected under U.S. Patent App. No. 64/111,973.</p>
+    </footer>
+
+    <!-- Interactive Script for i18n Language Toggle -->
+    <script>
+        let currentLang = 'zh';
+
+        const textData = {
+            zh: {
+                dlTitle: 'DROS (Dharma Reasoning Operating System)',
+                dlSubtitle: 'DROS 的原意為 <strong>「Dharma Reasoning Operating System (佛法邏輯推理作業系統)」</strong>。<br>它是全球首創以<strong>「確定性本體論路由 (Deterministic Ontological Routing)」</strong>與天台宗<strong>「判教 (Panjiao) 知識架構」</strong>為核心的 AI 佛法義理推理引擎。',
+                sec1Title: '🧠 開解：為什麼需要「本體論 AI 佛法義理推理引擎」？',
+                sec1P1: '傳統大語言模型 (LLM) 與基於向量相似度的 RAG 檢索，存在嚴重的「語境盲目性 (Context Blindness)」。在佛學大藏經與嚴謹哲學中，這會導致極為致命的<strong>「跨宗派知識污染與語義漂移」</strong>（例如：將禪宗的「本覺」、唯識的「阿賴耶識」與中觀的「緣起自性空」強行抹平混淆，甚至憑空編造經文卷數）。',
+                sec1P2: 'DROS 借鑑古印度與中國天台宗智顗大師的「判教」智慧，將概念邊界從軟性的 Prompt 提示詞，升級為作業系統層級的物理 Access Control Lists (ACL)。配合 **20,947 個黃金名相本體節點**，實現 <strong>0 延遲語義隔離與 100% 無幻覺定錨</strong>。',
+                sec2Title: '🔬 論文研究 (Zenodo Peer-Reviewed Papers)',
+                sec2P1: 'DROS 的本體論路由與金剛契約物理熔斷機制，已發表於國際 Zenodo 學術數據庫：'
+            },
+            en: {
+                dlTitle: 'DROS (Dharma Reasoning Operating System)',
+                dlSubtitle: 'DROS stands for <strong>"Dharma Reasoning Operating System"</strong>.<br>It is the world\'s first AI Buddhist reasoning engine centered on <strong>"Deterministic Ontological Routing (DOR)"</strong> and the Tiantai school\'s <strong>"Panjiao (Doctrinal Classification)"</strong> architecture.',
+                sec1Title: '🧠 Why an "Ontological AI Buddhist Reasoning Engine"?',
+                sec1P1: 'Conventional LLMs and vector-similarity RAG suffer from severe "Context Blindness". In classical Buddhist philosophy, this leads to catastrophic <strong>cross-sectarian knowledge contamination and semantic drift</strong> (e.g., falsely confounding Zen\'s "Original Enlightenment" with Yogacara\'s "Alaya-vijnana").',
+                sec1P2: 'Drawing inspiration from Master Zhiyi\'s 6th-century Tiantai Panjiao system, DROS shifts domain boundary enforcement from soft prompts to OS-level physical ACLs, backed by <strong>20,947 golden concept nodes</strong> for zero-latency semantic isolation.',
+                sec2Title: '🔬 Academic Research Publications (Zenodo)',
+                sec2P1: 'DROS\'s Ontological Routing and Vajra Circuit-Breaking mechanisms are published on Zenodo:'
+            }
+        };
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'zh' ? 'en' : 'zh';
+            const data = textData[currentLang];
+
+            document.getElementById('dl-title').innerHTML = data.dlTitle;
+            document.getElementById('dl-subtitle').innerHTML = data.dlSubtitle;
+            document.getElementById('sec1-title').innerHTML = data.sec1Title;
+            document.getElementById('sec1-p1').innerHTML = data.sec1P1;
+            document.getElementById('sec1-p2').innerHTML = data.sec1P2;
+            document.getElementById('sec2-title').innerText = data.sec2Title;
+            document.getElementById('sec2-p1').innerText = data.sec2P1;
+        }
+
+        function toggleMenu() {
+            const navList = document.getElementById('nav-list');
+            navList.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
